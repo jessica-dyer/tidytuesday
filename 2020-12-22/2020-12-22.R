@@ -26,7 +26,7 @@ df$gdp_log <- log(df$gdp_dollar)
 
 ## Look for duplicate entries by country name and year
 df_dist <- distinct(df, name, year, .keep_all = TRUE )
-df_dist$year <- as.numeric(df_dist$year)
+df_dist$year <- as.character(df_dist$year)
 
 ## Create bubble plot 
 p <- ggplot(df_dist, aes(gdp_log, dollar_price, size = dollar_price, color = name, label = name)) + 
