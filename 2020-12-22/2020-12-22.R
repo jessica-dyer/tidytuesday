@@ -20,12 +20,13 @@ indicator <- c("dollar_price", "gdp_dollar")
 df <- select(big_mac, all_of(bubble_variables))
 keep <- complete.cases(df)
 df <- subset(df, keep == "TRUE")
-df$year <- year(df$date)
+df$year <- as.numeric(year(df$date))
 df <- select(df, -(date))
 df$gdp_log <- log(df$gdp_dollar)
 
 ## Look for duplicate entries by country name and year
 df_dist <- distinct(df, name, year, .keep_all = TRUE )
+df_dist$year <- as.numeric(df_dist$year)
 
 ## Create bubble plot 
 p <- ggplot(df_dist, aes(gdp_log, dollar_price, size = dollar_price, color = name, label = name)) + 
