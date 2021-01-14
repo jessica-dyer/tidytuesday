@@ -77,45 +77,7 @@ us_artists$race <-
 us_artists <- rename(us_artists, artistId = id)
 merged <- merge(artwork, us_artists, by = "artistId")
 
-## Plot the acquisition year by gender & race
-merged_f <- filter(merged, gender == "Female")
-merged_m <- filter(merged, gender == "Male")
-
-f <- count(merged, artist, acquisitionYear, race)
-
-g <- ggplot(f, aes(x = acquisitionYear, y = n, color = race)) + 
-geom_point() + 
-  labs(x = "Year of Acquisition",                
-       y = "Pieces of artwork aquired per artist", 
-       main = "Who's Art Are We Collecting?") + 
-  theme_economist() +
-  scale_color_economist(name = NULL)
-
-g + scale_color_manual(values = c("#708098", "#F2E3EA", "#DCE3EF"))
-
-## Plot the number of pieces of artwork acquired by year and artist race
-h <- ggplot(blerp, aes(acquisitionYear, y = n, color = race)) +
-  geom_density(adjust=1.5, alpha=.4) +
-  theme_ipsum()
-
-black <- filter(f, race == "Black")
-
-blerp %>%
-  ggplot( aes(x=acquisitionYear, y=n, group=race, color=race)) +
-  geom_area() + 
-  scale_color_viridis(discrete = TRUE) +
-  ggtitle("US Born Artist's Artwork Acquired by Race") +
-  theme_ipsum() +
-  ylab("Number of artowrks acquired") + 
-  theme_ipsum() +
-  theme(
-    legend.position="none",
-    panel.spacing = unit(0.1, "lines"),
-    strip.text.x = element_text(size = 8),
-    plot.title = element_text(size=14)
-  ) 
-
-## Stream plot? 
+## Proportional area
 blerp <- filter(blerp, acquisitionYear >1950 & race != "Unknown")
 
 blerp <- blerp  %>%
