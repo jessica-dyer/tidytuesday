@@ -95,7 +95,8 @@ g <- ggplot(blerp, aes(x=acquisitionYear, y=percentage, fill=race)) +
   labs(fill = "Race", 
        caption = "Data Source: Tate Art Museum (github.com/tategallery/collection) | Design: Jessica Dyer")
 
-ggsave(filename = "TATE_race.png", plot = g)
+ggsave(filename = "TATE_race.png", plot = g, width = 20, height = 10)
+
 
 
 
