@@ -57,7 +57,7 @@ us_artists_names <- us_artists$name
 ## I googled every 331 US born artist and looked at their image. If I couldn't
 ## find a photo quickly enough, I marked as "unknown". There might be errors. 
 
-us_artists2 <- read_excel("us_artists2.xlsx")
+us_artists2 <- read_excel("2021-01-12/us_artists2.xlsx")
 
 ## Lets bind the new race data into the us_artists data
 
@@ -77,8 +77,10 @@ us_artists$race <-
 us_artists <- rename(us_artists, artistId = id)
 merged <- merge(artwork, us_artists, by = "artistId")
 
+f <- count(merged, artist, acquisitionYear, race)
+
 ## Proportional area
-blerp <- filter(blerp, acquisitionYear >1950 & race != "Unknown")
+blerp <- filter(f, acquisitionYear >1950 & race != "Unknown")
 
 blerp <- blerp  %>%
   group_by(acquisitionYear, race) %>%
@@ -96,6 +98,8 @@ g <- ggplot(blerp, aes(x=acquisitionYear, y=percentage, fill=race)) +
        caption = "Data Source: Tate Art Museum (github.com/tategallery/collection) | Design: Jessica Dyer")
 
 ggsave(filename = "TATE_race.png", plot = g, width = 20, height = 10)
+
+## Step graph better?
 
 
 
